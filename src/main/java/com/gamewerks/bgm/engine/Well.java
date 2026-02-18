@@ -60,7 +60,7 @@ public class Well {
    
     /**
      * @param p the piece
-     * @return true iff the given piece collides with the well
+     * @return true if the given piece collides with the well
      */
     public boolean collides(Piece p) {
         return collides(p.getLayout(), p.getPosition());
@@ -69,7 +69,7 @@ public class Well {
     /**
      * @param layout the piece layout
      * @param pos position
-     * @return true iff the given piece, expressed in terms of its layout and
+     * @return true if the given piece, expressed in terms of its layout and
      *         position collides with the well
      */
     public boolean collides(boolean[][] layout, Position pos) {
