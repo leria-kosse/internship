@@ -41,6 +41,11 @@ public class Main {
         // + J/Z: rotate counterclockwise
         // + K/X: rotate clockwise
         frame.addKeyListener(new KeyAdapter() {
+            /**
+             * Notifies the game engine when a key is pressed
+             * 
+             * @param e the key evnet
+             */
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W: game.keyDown(KeyKind.SOFT_DROP); return;
@@ -59,6 +64,9 @@ public class Main {
                 }
             }
             
+            /**
+             * Tells the game engine when a key is not pressed anymore 
+             */
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W: game.keyUp(KeyKind.SOFT_DROP); return;
