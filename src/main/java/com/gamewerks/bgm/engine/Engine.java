@@ -53,8 +53,9 @@ public class Engine {
                 delay = attrs.are(); // delay time set to ARE if a line was not cleared(noraml delay)
             }
             if (entryCounter >= delay) {
-                activePiece = new Piece(nextPiece(),
-                        new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
+                Position pos = new Position(
+                        Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2);
+                activePiece = new Piece(nextPiece(), pos);
                 entryCounter = 0;
                 lineWasCleared = false;
                 if (board.collides(activePiece)) {
@@ -172,11 +173,11 @@ public class Engine {
     }
 
     /**
-     * Returns the next piece from the array. If the list is empty it reshuffles and 
-     * resets index before drawing. 
+     * Returns the next piece from the array. If the list is empty it reshuffles and
+     * resets index before drawing.
      * 
      * @return the next piece
-    */
+     */
 
     private PieceKind nextPiece() {
         if (randyIndex == randy.length) {
@@ -191,7 +192,7 @@ public class Engine {
      * Shuffles the given array of pieces in place using the Fisher-Yates algorithm
      * 
      * @param arr the array to shuffle
-    */
+     */
 
     private void shuffle(PieceKind[] arr) {
         for (int i = arr.length - 1; i > 0; i--) {
