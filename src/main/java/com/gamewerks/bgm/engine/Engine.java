@@ -1,6 +1,7 @@
 package com.gamewerks.bgm.engine;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.gamewerks.bgm.util.Constants;
 import com.gamewerks.bgm.util.Position;
@@ -15,11 +16,11 @@ public class Engine {
     private Piece activePiece;
     private GameAttributes attrs;
     private InputState input;
-    private PieceKind[] randy;
+    private PieceKind[] randy = PieceKind.ALL;
 
     private int lockCounter;
     private int entryCounter;
-    private int randyIndex;
+    private int randyIndex = PieceKind.ALL.length;
     private boolean lineWasCleared;
     private boolean isSoftDropping;
     private boolean isHardDropping;
@@ -46,15 +47,13 @@ public class Engine {
         if (activePiece == null) {
             entryCounter += 1;
             int delay;
-            if (lineWasCleared)
-            {
-                delay = attrs.lineClearDleay(); //delay time set to lineClearDelay if a line was cleared
-            }
-            else{
-                delay = attrs.are(); //delay time set to ARE if a line was not cleared(noraml delay)
+            if (lineWasCleared) {
+                delay = attrs.lineClearDleay(); // delay time set to lineClearDelay if a line was cleared
+            } else {
+                delay = attrs.are(); // delay time set to ARE if a line was not cleared(noraml delay)
             }
             if (entryCounter >= delay) {
-                activePiece = new Piece(PieceKind.I,
+                activePiece = new Piece(nextPiece(),
                         new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
                 entryCounter = 0;
                 lineWasCleared = false;
@@ -64,7 +63,6 @@ public class Engine {
             }
         }
     }
-    
 
     /**
      * Try to move the active piece to the new position, resetting if the
@@ -171,6 +169,39 @@ public class Engine {
         // original position. Move the piece there and reset the lock counter.
         lockCounter = 0;
         activePiece.moveTo(candidate);
+    }
+
+    /**
+     * Returns the next piece from the array. If the list is empty it reshuffles and 
+     * resets index before drawing. 
+     * 
+     * @return the next piece
+    */
+
+    private PieceKind nextPiece() {
+        if (randyIndex == randy.length) {
+            shuffle(randy);
+            randyIndex = 0;
+        }
+        return randy[randyIndex++];
+
+    }
+
+    /**
+     * Shuffles the given array of pieces in place using the Fisher-Yates algorithm
+     * 
+     * @param arr the array to shuffle
+    */
+
+    private void shuffle(PieceKind[] arr) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            int randy2 = ThreadLocalRandom.current().nextInt(i + 1);
+            PieceKind tempy = arr[i];
+            arr[i] = arr[randy2];
+            arr[randy2] = tempy;
+
+        }
+
     }
 
     /**
