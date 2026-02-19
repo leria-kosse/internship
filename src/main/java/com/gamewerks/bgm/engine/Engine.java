@@ -48,14 +48,15 @@ public class Engine {
             entryCounter += 1;
             int delay;
             if (lineWasCleared) {
-                delay = attrs.lineClearDleay(); // delay time set to lineClearDelay if a line was cleared
+                // delay time set to lineClearDelay if a line was cleared
+                delay = attrs.lineClearDleay(); 
             } else {
-                delay = attrs.are(); // delay time set to ARE if a line was not cleared(noraml delay)
+                // delay time set to ARE if a line was not cleared(noraml delay)
+                delay = attrs.are(); 
             }
             if (entryCounter >= delay) {
-                Position pos = new Position(
-                        Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2);
-                activePiece = new Piece(nextPiece(), pos);
+                activePiece = new Piece(nextPiece(), 
+                        new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
                 entryCounter = 0;
                 lineWasCleared = false;
                 if (board.collides(activePiece)) {
