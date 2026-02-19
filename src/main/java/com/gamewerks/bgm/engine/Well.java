@@ -55,7 +55,7 @@ public class Well {
      * @return true iff (row, col) is a valid position in this well
      */
     public boolean isValidPosition(int row, int col) {
-        return row >= 0 && row < grid.length && col >= 0 && col <= grid[0].length;
+        return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
     }
    
     /**
